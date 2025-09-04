@@ -1,0 +1,31 @@
+# Example configuration values for Azure deployment
+
+name_prefix     = "myapp"
+environment     = "dev"
+location        = "eastus"
+
+# Networking
+address_space     = ["10.10.0.0/16"]
+web_subnet_cidr   = "10.10.1.0/24"
+bastion_subnet_cidr = "10.10.100.0/27"
+
+# Access
+admin_username  = "azureuser"
+ssh_public_key  = "ssh-rsa AAAA... replace with your public key ..."
+create_bastion  = true
+allowed_ssh_cidrs = [] # e.g., ["203.0.113.0/24"] if you want to allow direct SSH (not recommended)
+
+# Compute
+vm_size        = "Standard_B2s"
+instance_count = 2
+zones          = ["1", "2", "3"]
+
+# Load balancer / DNS
+dns_label_prefix = "myapp-dev" # optional; leave blank "" to skip public DNS
+enable_https     = false
+
+# Tags
+tags = {
+  owner = "you@example.com"
+  cost_center = "web"
+}
