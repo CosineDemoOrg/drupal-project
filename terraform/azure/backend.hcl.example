@@ -1,0 +1,5 @@
+# Example backend configuration for remote Terraform state in Azure Storage
+resource_group_name  = "rg-tfstate"
+storage_account_name = "sttfstateyourunique"
+container_name       = "tfstate"
+key                  = "myapp-dev.tfstate"
