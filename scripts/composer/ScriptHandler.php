@@ -52,16 +52,18 @@ class ScriptHandler {
         'required' => TRUE,
       ];
       SettingsEditor::rewrite($drupalRoot . '/sites/default/settings.php', $settings);
-      $fs->chmod($drupalRoot . '/sites/default/settings.php', 0666);
-      $event->getIO()->write("Created a sites/default/settings.php file with chmod 0666");
+      // Set sane default permissions, then harden settings.php.
+      $fs->chmod($drupalRoot . '/sites/default/settings.php', 0644);
+      $fs->chmod($drupalRoot . '/sites/default/settings.php', 0444);
+      $event->getIO()->write("Created a sites/default/settings.php file and hardened permissions to chmod 0444");
     }
 
-    // Create the files directory with chmod 0777
+    // Create the files directory with secure permissions (chmod 0755)
     if (!$fs->exists($drupalRoot . '/sites/default/files') && !is_link($drupalRoot . '/sites/default/files')) {
       $oldmask = umask(0);
-      $fs->mkdir($drupalRoot . '/sites/default/files', 0777);
+      $fs->mkdir($drupalRoot . '/sites/default/files', 0755);
       umask($oldmask);
-      $event->getIO()->write("Created a sites/default/files directory with chmod 0777");
+      $event->getIO()->write("Created a sites/default/files directory with chmod 0755");
     }
   }
 
